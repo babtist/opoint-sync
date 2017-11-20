@@ -118,6 +118,7 @@ getResults = function(eventorApi, organisationId, events) {
 parseResults = function(results) {
     let eventResults = {};
     results.forEach(res => {
+        console.log('Parse results for ' + res.event.name['_']);
         let event = res.event;
         let classResult = res.classResult;
         let eventClass = classResult.eventClass;
@@ -282,6 +283,8 @@ getStarts = function(eventorApi, organisationId, events) {
 
 parseStarts = function(eventResults, startList) {
     startList.forEach(res => {
+        console.log('Parse starts for ' + res.event.name['_']);
+
         let event = res.event;
         let classStart = res.classStart;
         let eventClass = classStart.eventClass;
@@ -397,7 +400,7 @@ parseEntries = function(eventResults, classMap, entries) {
     }
     entries.forEach(entry => {
         let event = entry.event;
-        console.log(entry);
+        console.log('Parse entries for ' + event.name['_']);
         if (!entry.competitor.person || !entry.competitor.person.personId) {
             return;
         }
