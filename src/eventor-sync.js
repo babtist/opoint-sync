@@ -31,7 +31,7 @@ EventorSync.prototype.syncEvents = function(organisationId, fromDate, toDate) {
     let self = this;
     return new Promise(function(resolve, reject) {
         self.eventorApi.events({fromDate: fromDate, toDate: toDate})
-            .then(events => findEventsWithCompetitors(this.eventorApi, organisationId, events)
+            .then(events => findEventsWithCompetitors(self.eventorApi, organisationId, events)
                 .then(events => getResults(self.eventorApi, organisationId, events)
                     .then(results => {
                         // console.log(results);
@@ -47,7 +47,7 @@ EventorSync.prototype.syncEvents = function(organisationId, fromDate, toDate) {
                                         let promises = [];
                                         let classMap = new Map();
                                         remainingEventIds.forEach(e => {
-                                            promises.push(eventorApi.eventClasses(e)
+                                            promises.push(self.eventorApi.eventClasses(e)
                                                 .then(eventClasses => {
                                                     eventClasses.forEach(c => classMap.set(c.eventClassId, c));
                                                 }));
