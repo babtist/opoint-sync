@@ -181,16 +181,22 @@ parseResults = function(results) {
                 race.set('raceDistance', eventRace.raceDistance);
                 race.set('raceName', eventRace.name['_']);
                 race.set('raceDate', eventRace.raceDate);
-                if (eventRace.eventRaceId) {
-                    race.se('eventRaceId', eventRace.eventRaceId);
-                }
+
                 classRaceInfo = eventClass.classRaceInfo.find(c => c.eventRaceId === eventRace.eventRaceId);
                 result = raceResult.result;
             } else {
                 if (r.result) {
                     // Individual race
                     result = r.result;
-                    classRaceInfo = eventClass.classRaceInfo;
+                    if (eventClass.classRaceInfo) {
+                        classRaceInfo = eventClass.classRaceInfo;
+                    } else if (event.eventRace) {
+                        race.set('raceDistance', event.eventRace.raceDistance);
+                        race.set('raceLightCondition', event.eventRace.raceLightCondition);
+                        race.set('raceDistance', event.eventRace.raceDistance);
+                        race.set('raceDate', event.eventRace.raceDate);
+                        race.set('eventRaceId', event.eventRace.eventRaceId);
+                    }
                 } else {
                     // Relay
                     result = r;
