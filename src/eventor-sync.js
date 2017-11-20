@@ -181,6 +181,9 @@ parseResults = function(results) {
                 race.set('raceDistance', eventRace.raceDistance);
                 race.set('raceName', eventRace.name['_']);
                 race.set('raceDate', eventRace.raceDate);
+                if (eventRace.eventRaceId) {
+                    race.se('eventRaceId', eventRace.eventRaceId);
+                }
                 classRaceInfo = eventClass.classRaceInfo.find(c => c.eventRaceId === eventRace.eventRaceId);
                 result = raceResult.result;
             } else {
@@ -219,10 +222,18 @@ parseResults = function(results) {
                 console.log('raceIndo', classRaceInfo);
             }
 
+            if (classRaceInfo) {
+                race.set('noOfStarts', classRaceInfo.noOfStarts);
+                race.set('eventRaceId', classRaceInfo.eventRaceId);
+            } else {
+                if (classResult.noOfStarts) {
+                    race.set('noOfStarts', classResult.noOfStarts);
+                }
+            }
 
-            race.set('noOfStarts', classRaceInfo.noOfStarts);
-            race.set('eventRaceId', classRaceInfo.eventRaceId);
-
+            if (!race.get('eventRaceId')) {
+                console.log('No eventRaceId', r, res, classResult);
+            }
 
             let personEventResult = eventResults[person.get('id')];
             let eventResult;
