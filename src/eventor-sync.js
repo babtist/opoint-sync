@@ -104,7 +104,7 @@ getResults = function(eventorApi, organisationId, events) {
         let results = [];
         events.forEach(e => promises.push(eventorApi.results(organisationId, e.eventId).then((classResult) => {
             results = results.concat(classResult.map(cr => { return {event: e, classResult: cr}}));
-        }).catch(log)));
+        })));
         Promise.all(promises)
             .then(() => resolve(results))
             .catch(err => reject(err));
@@ -256,7 +256,7 @@ getStarts = function(eventorApi, organisationId, events) {
         let starts = [];
         events.forEach(e => promises.push(eventorApi.starts(organisationId, e.eventId).then((classStart) => {
             starts = starts.concat(classStart.map(cs => { return {event: e, classStart: cs}}));
-        }).catch(log)));
+        })));
         Promise.all(promises)
             .then(() => resolve(starts))
             .catch(err => reject(err));
@@ -368,7 +368,7 @@ getEntries = function(eventorApi, organisationId, events) {
 
         eventorApi.entries(qs).then((entries) => {
             resolve(entries);
-        }).catch(log);
+        }).catch(e => reject(e));
 
 
     });
