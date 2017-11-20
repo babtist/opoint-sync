@@ -22,11 +22,22 @@ https.createServer({
     cert: fs.readFileSync('cert.pem')
 }, app).listen(55555);
 
-app.get('/sync', function (req, res) {
+app.get('/sync/person', function (req, res) {
 
     eventorSync.syncPersons(organisationId)
         .then(() => {
             return res.send('Persons synched');
+        })
+        .catch(err => {
+            res.status(500).send(err);
+        });
+});
+
+app.get('/sync/event', function (req, res) {
+
+    eventorSync.syncEvents(organisationId, '2017-01-01', '2017-01-20')
+        .then(() => {
+            return res.send('Events synched');
         })
         .catch(err => {
             res.status(500).send(err);
