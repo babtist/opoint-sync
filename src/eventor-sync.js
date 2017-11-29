@@ -118,7 +118,7 @@ getResults = function(eventorApi, organisationId, events) {
 parseResults = function(results) {
     let eventResults = {};
     results.forEach(res => {
-        console.log('Parse results for ' + res.event.name['_']);
+        console.log('Parse results for ' + res.event);
         let event = res.event;
         let classResult = res.classResult;
         let eventClass = classResult.eventClass;
@@ -269,6 +269,7 @@ parseResults = function(results) {
 };
 
 getStarts = function(eventorApi, organisationId, events) {
+    console.log('Get starts');
     let promises = [];
     return new Promise(function (resolve, reject) {
         let starts = [];
