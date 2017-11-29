@@ -379,6 +379,7 @@ addStartInfo = function(eventResult, event, eventClass, person, start, classRace
 };
 
 getEntries = function(eventorApi, organisationId, events) {
+    console.log('Get entries');
     return new Promise(function (resolve, reject) {
         let qs = {
             organisationIds: organisationId,
@@ -396,6 +397,7 @@ getEntries = function(eventorApi, organisationId, events) {
 };
 
 parseEntries = function(eventResults, classMap, entries) {
+    console.log('Parse entries');
     if (!Array.isArray(entries)) {
         entries = [entries];
     }
