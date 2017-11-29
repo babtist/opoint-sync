@@ -64,6 +64,7 @@ EventorSync.prototype.syncEvents = function(organisationId, fromDate, toDate) {
                                             });
 
                                             console.log('Processed ' + eventResultArray.length + ' results');
+                                            resolve(eventResultArray);
                                             /*
                                             EventResult.upsertBatch(eventResultArray)
                                                 .then(() => resolve())
