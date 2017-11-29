@@ -47,7 +47,7 @@ EventorSync.prototype.syncEvents = function(organisationId, fromDate, toDate) {
                                 getEntries(self.eventorApi, organisationId, remainingEventIds)
                                     .then(entries => {
                                         if (entries.length === 0) {
-                                            resolve(eventResultArray);
+                                            resolve(eventResults);
                                             return;
                                         }
                                         let promises = [];
@@ -70,7 +70,7 @@ EventorSync.prototype.syncEvents = function(organisationId, fromDate, toDate) {
                                             });
 
                                             console.log('Processed ' + eventResultArray.length + ' results');
-                                            resolve(eventResultArray);
+                                            resolve(eventResults);
                                             /*
                                             EventResult.upsertBatch(eventResultArray)
                                                 .then(() => resolve())
