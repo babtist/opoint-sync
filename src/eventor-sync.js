@@ -379,7 +379,7 @@ addStartInfo = function(eventResult, event, eventClass, person, start, classRace
 };
 
 getEntries = function(eventorApi, organisationId, events) {
-    console.log('Get entries');
+    console.log('Get entries', events);
     return new Promise(function (resolve, reject) {
         let qs = {
             organisationIds: organisationId,
