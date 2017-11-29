@@ -163,8 +163,9 @@ parseResults = function(results) {
             if (!r.person || !r.person.personId) {
                 return;
             }
-            let person = new Person(r.person.personId['_'],
-                r.person.personName.given['_'] + ' ' + r.person.personName.family);
+            let person = new Person()
+                .set('id', r.person.personId['_'])
+                .set('name', r.person.personName.given['_'] + ' ' + r.person.personName.family);
             let eventInfo = new EventInfo()
                 .set('eventForm', event.eventForm)
                 .set('eventId', event.eventId)
@@ -310,8 +311,9 @@ parseStarts = function(eventResults, startList) {
             if (!ps.person || !ps.person.personId) {
                 return;
             }
-            let person = new Person(pr.person.personId['_'],
-                pr.person.personName.given['_'] + ' ' + pr.person.personName.family);
+            let person = new Person()
+                .set('id', pr.person.personId['_'])
+                .set('name', pr.person.personName.given['_'] + ' ' + pr.person.personName.family);
             let personId = ps.person.personId['_'];
             let personEventResult = eventResults[personId];
             if (!personEventResult) {
@@ -432,8 +434,9 @@ parseEntries = function(eventResults, classMap, entries) {
         if (!eventResult) {
             eventResult = new EventResult();
             personEventResult[event.eventId] = eventResult;
-            let person = new Person(entry.competitor.person.personId['_'],
-                entry.competitor.person.personName.given['_'] + ' ' + entry.competitor.person.personName.family);
+            let person = new Person()
+                .set('id', entry.competitor.person.personId['_'])
+                .set('name', entry.competitor.person.personName.given['_'] + ' ' + entry.competitor.person.personName.family);
             let eventInfo = new EventInfo()
                 .set('eventForm', event.eventForm)
                 .set('eventId', event.eventId)
