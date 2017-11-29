@@ -40,10 +40,16 @@ EventorSync.prototype.syncEvents = function(organisationId, fromDate, toDate) {
                         events = events.filter(e => remainingEventIds.indexOf(e.eventId) > -1);
                         getStarts(self.eventorApi, organisationId, events)
                             .then(starts => {
-                                parseStarts(eventResults, starts);
-                                remainingEventIds = getRemainingEventIds(remainingEventIds, starts.map(r => r.event.eventId));
+                                if (starts.length > 0) {
+                                    parseStarts(eventResults, starts);
+                                    remainingEventIds = getRemainingEventIds(remainingEventIds, starts.map(r => r.event.eventId));
+                                }
                                 getEntries(self.eventorApi, organisationId, remainingEventIds)
                                     .then(entries => {
+                                        if (entries.length === 0) {
+                                            resolve(eventResultArray);
+                                            return;
+                                        }
                                         let promises = [];
                                         let classMap = new Map();
                                         remainingEventIds.forEach(e => {
@@ -273,6 +279,10 @@ getStarts = function(eventorApi, organisationId, events) {
     console.log('Get starts');
     let promises = [];
     return new Promise(function (resolve, reject) {
+        if (events.length === 0) {
+            resolve([]);
+            return;
+        }
         let starts = [];
         events.forEach(e => promises.push(eventorApi.starts(organisationId, e.eventId).then((classStart) => {
             starts = starts.concat(classStart.map(cs => { return {event: e, classStart: cs}}));
@@ -382,6 +392,10 @@ addStartInfo = function(eventResult, event, eventClass, person, start, classRace
 getEntries = function(eventorApi, organisationId, events) {
     console.log('Get entries', events);
     return new Promise(function (resolve, reject) {
+        if (events.length === 0) {
+            resolve([]);
+            return;
+        }
         let qs = {
             organisationIds: organisationId,
             eventIds: events.join(','),
