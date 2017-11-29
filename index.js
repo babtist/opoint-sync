@@ -36,8 +36,8 @@ app.get('/sync/person', function (req, res) {
 app.get('/sync/event', function (req, res) {
 
     eventorSync.syncEvents(organisationId, '2017-01-01', '2017-01-20')
-        .then(() => {
-            return res.send('Events synched');
+        .then((r) => {
+            return res.send(r);
         })
         .catch(err => {
             res.status(500).send(err);
