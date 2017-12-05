@@ -170,9 +170,9 @@ parseResults = function(results) {
             let eventInfo = new EventInfo()
                 .set('eventForm', event.eventForm)
                 .set('eventId', event.eventId)
-                .set('eventName', event.name['_'])
+                .set('eventName', event.name)
                 .set('eventClassId', eventClass.eventClassId)
-                .set('eventClassName', eventClass.name['_'])
+                .set('eventClassName', eventClass.name)
                 .set('classTypeId', eventClass.classTypeId)
                 .set('eventDate', event.startDate)
                 .set('disciplineId', event.disciplineId)
@@ -189,7 +189,7 @@ parseResults = function(results) {
                 race.set('raceDistance', eventRace.raceDistance);
                 race.set('raceLightCondition', eventRace.raceLightCondition);
                 race.set('raceDistance', eventRace.raceDistance);
-                race.set('raceName', eventRace.name['_']);
+                race.set('raceName', eventRace.name);
                 race.set('raceDate', eventRace.raceDate);
 
                 classRaceInfo = eventClass.classRaceInfo.find(c => c.eventRaceId === eventRace.eventRaceId);
