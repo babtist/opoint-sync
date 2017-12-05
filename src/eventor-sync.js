@@ -47,7 +47,7 @@ EventorSync.prototype.syncEvents = function(organisationId, fromDate, toDate) {
                                 getEntries(self.eventorApi, organisationId, remainingEventIds)
                                     .then(entries => {
                                         if (entries.length === 0) {
-                                            resolve(eventResults);
+                                            storeResults(eventResults, resolve, reject);
                                             return;
                                         }
                                         let promises = [];
@@ -60,21 +60,7 @@ EventorSync.prototype.syncEvents = function(organisationId, fromDate, toDate) {
                                         });
                                         Promise.all(promises).then(() => {
                                             parseEntries(eventResults, classMap, entries);
-                                            let eventResultArray = [];
-
-
-                                            Object.keys(eventResults).forEach(personId => {
-                                                Object.keys(eventResults[personId]).forEach(eventId => {
-                                                    eventResultArray.push(eventResults[personId][eventId]);
-                                                })
-                                            });
-/*
-                                            console.log('Processed ' + eventResultArray.length + ' results');
-                                            resolve(eventResults);
-                                            */
-                                            EventResult.upsertBatch(eventResultArray)
-                                                .then(() => resolve('Processed ' + eventResultArray.length + ' results'))
-                                                .catch(e => reject(e));
+                                            storeResults(eventResults, resolve, reject);
 
                                         }).catch(e => reject(e));
                                     })
@@ -86,6 +72,21 @@ EventorSync.prototype.syncEvents = function(organisationId, fromDate, toDate) {
                 .catch(e => reject(e)))
             .catch(e => reject(e));
     });
+};
+
+storeResults = function(eventResults, resolve, reject) {
+    let eventResultArray = [];
+
+
+    Object.keys(eventResults).forEach(personId => {
+        Object.keys(eventResults[personId]).forEach(eventId => {
+            eventResultArray.push(eventResults[personId][eventId]);
+        })
+    });
+
+    EventResult.upsertBatch(eventResultArray)
+        .then(() => resolve('Processed ' + eventResultArray.length + ' results'))
+        .catch(e => reject(e));
 };
 
 findEventsWithCompetitors = function(eventorApi, organisationId, events) {
