@@ -68,14 +68,14 @@ EventorSync.prototype.syncEvents = function(organisationId, fromDate, toDate) {
                                                     eventResultArray.push(eventResults[personId][eventId]);
                                                 })
                                             });
-
+/*
                                             console.log('Processed ' + eventResultArray.length + ' results');
                                             resolve(eventResults);
-                                            /*
+                                            */
                                             EventResult.upsertBatch(eventResultArray)
-                                                .then(() => resolve())
+                                                .then(() => resolve('Processed ' + eventResultArray.length + ' results'))
                                                 .catch(e => reject(e));
-                                                */
+
                                         }).catch(e => reject(e));
                                     })
                                     .catch(e => reject(e));
@@ -164,7 +164,7 @@ parseResults = function(results) {
                 return;
             }
             let person = new Person()
-                .set('id', r.person.personId['_'])
+                .set('id', r.person.personId)
                 .set('name', r.person.personName.given['_'] + ' ' + r.person.personName.family);
             let eventInfo = new EventInfo()
                 .set('eventForm', event.eventForm)
